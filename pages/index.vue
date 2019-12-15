@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div>
+      <Test :user="{ firstName: 'emp', lastName: 'pitsu' }" />
       <logo />
       <h1 class="title">
         spa_portfolio_template
@@ -26,10 +27,12 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import Test from '~/components/Test.vue'
 
 export default {
   components: {
-    Logo
+    Logo,
+    Test
   }
 }
 </script>

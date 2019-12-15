@@ -5,20 +5,24 @@
   "author": "empitsu",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "dev": "nuxt-ts",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate",
+    "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "test": "jest"
   },
   "dependencies": {
+    "@nuxt/typescript-runtime": "^0.3.2",
     "@nuxtjs/axios": "^5.3.6",
     "nuxt": "^2.0.0",
-    "stylelint-scss": "^3.13.0"
+    "stylelint-scss": "^3.13.0",
+    "vue-property-decorator": "^8.3.0"
   },
   "devDependencies": {
+    "@nuxt/typescript-build": "^0.5.1",
     "@nuxtjs/eslint-config": "^1.0.1",
+    "@nuxtjs/eslint-config-typescript": "^1.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/stylelint-module": "^3.1.0",
     "@vue/test-utils": "^1.0.0-beta.27",
