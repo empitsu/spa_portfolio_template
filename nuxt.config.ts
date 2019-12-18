@@ -16,7 +16,14 @@ const config: Configuration = {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700%7CRoboto:400,700,300'
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -25,7 +32,13 @@ const config: Configuration = {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    '~/assets/vendor/bootstrap/css/bootstrap.min.css',
+    '~/assets/vendor/font-awesome/css/font-awesome.min.css',
+    '~/assets/vendor/animate.css/animate.css',
+    '~/assets/css/style.default.css',
+    '~/assets/css/style.pink.css'
+  ],
   /*
    ** Plugins to load before mounting the App
    */
