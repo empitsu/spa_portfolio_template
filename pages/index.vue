@@ -1,13 +1,13 @@
 <template>
-  <VIndexContent />
+  <VMainTemplate />
 </template>
 
 <script>
-import VIndexContent from '~/components/templates/VIndexContent/index.vue'
+import VMainTemplate from '~/components/templates/VMainTemplate/index.vue'
 
 export default {
   components: {
-    VIndexContent
+    VMainTemplate
   }
 }
 </script>
