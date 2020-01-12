@@ -23,6 +23,11 @@ const config: Configuration = {
         href:
           'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700%7CRoboto:400,700,300'
       }
+    ],
+    script: [
+      { src: '/__/firebase/7.6.1/firebase-app.js' },
+      { src: '/__/firebase/7.6.1/firebase-analytics.js' },
+      { src: '/__/firebase/init.js' }
     ]
   },
   /*
