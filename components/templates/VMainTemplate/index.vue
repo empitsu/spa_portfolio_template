@@ -17,35 +17,74 @@
           <div id="navbarcollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
-                <a href="#intro" class="nav-link link-scroll">Intro</a>
+                <a
+                  href="#intro"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
+                  >Intro</a
+                >
               </li>
               <li class="nav-item">
-                <a href="#about" class="nav-link link-scroll">About</a>
+                <a
+                  href="#about"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
+                  >About</a
+                >
               </li>
               <li class="nav-item">
-                <a href="#highlights" class="nav-link link-scroll"
+                <a
+                  href="#highlights"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
                   >Highlights</a
                 >
               </li>
               <li class="nav-item">
-                <a href="#vision" class="nav-link link-scroll">Vision</a>
+                <a
+                  href="#vision"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
+                  >Vision</a
+                >
               </li>
               <li class="nav-item">
-                <a href="#skills" class="nav-link link-scroll">Skills</a>
+                <a
+                  href="#skills"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
+                  >Skills</a
+                >
               </li>
               <li class="nav-item">
-                <a href="#references" class="nav-link link-scroll">My work</a>
+                <a
+                  href="#works"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
+                  >My work</a
+                >
               </li>
               <li class="nav-item">
-                <a href="#experience" class="nav-link link-scroll"
+                <a
+                  href="#experience"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
                   >Experience</a
                 >
               </li>
               <li class="nav-item">
-                <a href="#education" class="nav-link link-scroll">Education</a>
+                <a
+                  href="#education"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
+                  >Education</a
+                >
               </li>
               <li class="nav-item">
-                <a href="#certification" class="nav-link link-scroll"
+                <a
+                  href="#certification"
+                  class="nav-link link-scroll"
+                  @click.prevent="onClickNavBtn"
                   >Certification</a
                 >
               </li>
@@ -55,7 +94,7 @@
       </nav>
     </header>
     <!-- Intro Image-->
-    <section id="intro" class="intro-section pb-2">
+    <section id="intro" ref="intro" class="intro-section pb-2">
       <div class="container text-center">
         <h1 data-animate="fadeInDown" class="text-shadow mb-5">
           {{ portfolioData.firstName }} {{ portfolioData.lastName }}
@@ -66,7 +105,7 @@
       </div>
     </section>
     <!-- About-->
-    <section id="about" class="about-section">
+    <section id="about" ref="about" class="about-section">
       <div class="container">
         <header class="text-center">
           <h2 data-animate="fadeInDown" class="title">About me</h2>
@@ -89,7 +128,11 @@
       </div>
     </section>
     <!-- Service-->
-    <section id="highlights" class="bg-gradient services-section">
+    <section
+      id="highlights"
+      ref="highlights"
+      class="bg-gradient services-section"
+    >
       <div class="container">
         <header class="text-center">
           <h2 data-animate="fadeInDown" class="title">Highlights</h2>
@@ -121,6 +164,7 @@
     <!-- Vision -->
     <section
       id="vision"
+      ref="vision"
       data-dir="up"
       class="vision-section text-white parallax"
     >
@@ -138,7 +182,7 @@
       </div>
       <div class="dark-mask"></div>
     </section>
-    <section id="skills">
+    <section id="skills" ref="skills">
       <div class="container">
         <header class="text-center mb-2">
           <h2 data-animate="fadeInUp" class="title">Skills</h2>
@@ -159,10 +203,10 @@
       </div>
     </section>
     <!--
-    *** REFERENCES IMAGE ***
+    *** works IMAGE ***
     _________________________________________________________
     -->
-    <section id="references">
+    <section id="works" ref="works">
       <div class="container">
         <div class="col-sm-12">
           <div class="mb-5 text-center">
@@ -245,7 +289,7 @@
         </div>
       </div>
     </section>
-    <section id="experience">
+    <section id="experience" ref="experience">
       <div class="container">
         <header class="text-center mb-2">
           <h2 data-animate="fadeInUp" class="title">Professional Experience</h2>
@@ -269,7 +313,7 @@
         </div>
       </div>
     </section>
-    <section id="education">
+    <section id="education" ref="education">
       <div class="container">
         <header class="text-center mb-2">
           <h2 data-animate="fadeInUp" class="title">Education</h2>
@@ -286,7 +330,7 @@
         </div>
       </div>
     </section>
-    <section id="certification">
+    <section id="certification" ref="certification">
       <div class="container">
         <header class="text-center mb-2">
           <h2 data-animate="fadeInUp" class="title">
@@ -349,6 +393,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import smoothscroll from 'smoothscroll-polyfill'
 
 interface SkillCategory {
   categoryTitle: string
@@ -409,9 +454,24 @@ enum LinkType {
   GITHUB = 'github'
 }
 
+interface HTMLElementEvent<T extends HTMLElement> extends Event {
+  target: T | null
+}
+
 @Component
 export default class extends Vue {
   @Prop() portfolioData!: PortfolioData
+
+  public mounted() {
+    if (process.client) {
+      smoothscroll.polyfill()
+      // for debug
+      type TempWindow = {
+        __forceSmoothScrollPolyfill__: boolean
+      }
+      ;((window as unknown) as TempWindow).__forceSmoothScrollPolyfill__ = true
+    }
+  }
 
   public linkIconName(type: LinkType): string {
     switch (type) {
@@ -427,6 +487,14 @@ export default class extends Vue {
         // eslint-disable-next-line no-case-declarations
         const _exhaustiveCheck: never = type
         return _exhaustiveCheck
+    }
+  }
+
+  public onClickNavBtn(e: HTMLElementEvent<HTMLAnchorElement>): void {
+    if (e.target) {
+      const targetId = e.target.hash.replace(/^#/, '')
+      const target = this.$refs[targetId] as HTMLElement
+      target.scrollIntoView({ behavior: 'smooth' })
     }
   }
 }
