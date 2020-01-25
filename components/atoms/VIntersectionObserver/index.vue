@@ -1,20 +1,17 @@
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator'
+import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
 import 'intersection-observer'
 
 @Component
 export default class extends Vue {
+  @Prop() options?: IntersectionObserverInit
+
   private observer: IntersectionObserver | null = null
 
   mounted(): void {
-    const options = {
-      root: null,
-      rootMargin: '-50% 0px',
-      threshold: 0
-    }
     this.observer = new IntersectionObserver(([entry]) => {
       if (entry && entry.isIntersecting) this.onInterSect()
-    }, options)
+    }, this.options)
 
     this.observer.observe(this.$el)
   }

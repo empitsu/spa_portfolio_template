@@ -103,12 +103,20 @@
       </nav>
     </header>
     <!-- Intro Image-->
-    <VIntersectionObserver @intersect="onIntersect('intro')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('intro')"
+    >
       <section id="intro" ref="intro" class="intro-section pb-2">
         <div class="container text-center">
-          <h1 data-animate="fadeInDown" class="text-shadow mb-5">
-            {{ portfolioData.firstName }} {{ portfolioData.lastName }}
-          </h1>
+          <VIntersectionObserver @intersect="isShow = true">
+            <h1
+              :class="{ 'is-visible': isShow }"
+              class="text-shadow mb-5 fadeInDown"
+            >
+              {{ portfolioData.firstName }} {{ portfolioData.lastName }}
+            </h1>
+          </VIntersectionObserver>
           <p data-animate="slideInUp" class="h3 text-shadow text-400">
             {{ portfolioData.positionName }}
           </p>
@@ -116,7 +124,10 @@
       </section>
     </VIntersectionObserver>
     <!-- About-->
-    <VIntersectionObserver @intersect="onIntersect('about')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('about')"
+    >
       <section id="about" ref="about" class="about-section">
         <div class="container">
           <header class="text-center">
@@ -126,6 +137,7 @@
             <div data-animate="fadeInUp" class="col-lg-6">
               <!-- eslint-disable vue/no-v-html -->
               <p v-html="portfolioData.about.description"></p>
+              <!-- eslint-enable vue/no-v-html -->
             </div>
             <div data-animate="fadeInUp" class="col-lg-6">
               <div class="col-sm-6 mx-auto mt-5">
@@ -141,7 +153,10 @@
       </section>
     </VIntersectionObserver>
     <!-- Service-->
-    <VIntersectionObserver @intersect="onIntersect('highlights')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('highlights')"
+    >
       <section
         id="highlights"
         ref="highlights"
@@ -164,19 +179,22 @@
               <h3 class="heading mb-3 text-400">
                 {{ highlightItem.title }}
               </h3>
-
+              <!-- eslint-disable vue/no-v-html -->
               <p
                 class="text-left description"
                 v-html="highlightItem.description"
               ></p>
-              <!-- eslint-disable vue/no-v-html -->
+              <!-- eslint-enable vue/no-v-html -->
             </div>
           </div>
         </div>
       </section>
     </VIntersectionObserver>
     <!-- Vision -->
-    <VIntersectionObserver @intersect="onIntersect('vision')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('vision')"
+    >
       <section
         id="vision"
         ref="vision"
@@ -189,16 +207,21 @@
               My Career Goals
             </h2>
           </header>
+          <!-- eslint-disable vue/no-v-html -->
           <p
             data-animate="slideInUp"
             class="text-shadow text-400 animated slideInUp text-white"
             v-html="portfolioData.careerGoal"
           ></p>
+          <!-- eslint-enable vue/no-v-html -->
         </div>
         <div class="dark-mask"></div>
       </section>
     </VIntersectionObserver>
-    <VIntersectionObserver @intersect="onIntersect('skills')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('skills')"
+    >
       <section id="skills" ref="skills">
         <div class="container">
           <header class="text-center mb-2">
@@ -225,7 +248,10 @@
     *** works IMAGE ***
     _________________________________________________________
     -->
-    <VIntersectionObserver @intersect="onIntersect('works')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('works')"
+    >
       <section id="works" ref="works">
         <div class="container">
           <div class="col-sm-12">
@@ -292,11 +318,13 @@
                   </dd>
                 </dl>
                 <div class="works-detail-wrap clearfix">
+                  <!-- eslint-disable vue/no-v-html -->
                   <div
                     id="works-tabelog-webpack"
                     class="works-detail collapse"
                     v-html="workItem.description"
                   ></div>
+                  <!-- eslint-enable vue/no-v-html -->
                   <button
                     v-if="workItem.description"
                     class="works-btn-more btn-link"
@@ -313,7 +341,10 @@
         </div>
       </section>
     </VIntersectionObserver>
-    <VIntersectionObserver @intersect="onIntersect('experience')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('experience')"
+    >
       <section id="experience" ref="experience">
         <div class="container">
           <header class="text-center mb-2">
@@ -333,7 +364,9 @@
                 <div class="vtimeline-content">
                   <h3>{{ historyItem.companyName }}</h3>
                   <h4>{{ historyItem.position }}</h4>
+                  <!-- eslint-disable vue/no-v-html -->
                   <div v-html="historyItem.description"></div>
+                  <!-- eslint-enable vue/no-v-html -->
                 </div>
               </div>
             </div>
@@ -341,7 +374,10 @@
         </div>
       </section>
     </VIntersectionObserver>
-    <VIntersectionObserver @intersect="onIntersect('education')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('education')"
+    >
       <section id="education" ref="education">
         <div class="container">
           <header class="text-center mb-2">
@@ -355,12 +391,18 @@
             <h3>{{ educationItem.institutionName }}</h3>
             <span class="education-date">{{ educationItem.date }}</span>
             <h4>{{ educationItem.date }}</h4>
+            <!-- eslint-disable vue/no-v-html -->
+
             <p v-html="educationItem.description"></p>
+            <!-- eslint-enable vue/no-v-html -->
           </div>
         </div>
       </section>
     </VIntersectionObserver>
-    <VIntersectionObserver @intersect="onIntersect('certification')">
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
+      @intersect="onIntersect('certification')"
+    >
       <section id="certification" ref="certification">
         <div class="container">
           <header class="text-center mb-2">
@@ -497,6 +539,12 @@ export default class extends Vue {
   @Prop() portfolioData!: PortfolioData
 
   public intersectingId = ''
+  // TODO: コンポーネント化
+  public isShow = false
+
+  public get intersectionOptionsForNav(): IntersectionObserverInit {
+    return { root: null, rootMargin: '-50% 0px', threshold: 0 }
+  }
 
   public mounted() {
     if (process.client) {
@@ -871,5 +919,16 @@ export default class extends Vue {
   .education-block span {
     float: none;
   }
+}
+
+/* TODO:コンポーネント化*/
+.fadeInDown {
+  transform: translateY(-50px);
+  opacity: 0;
+}
+.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.8s cubic-bezier(0, 0, 0.18, 1);
 }
 </style>
