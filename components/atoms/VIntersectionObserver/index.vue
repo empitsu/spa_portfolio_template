@@ -1,5 +1,7 @@
 <script lang="ts">
 import { Vue, Component, Emit } from 'vue-property-decorator'
+import 'intersection-observer'
+
 @Component
 export default class extends Vue {
   private observer: IntersectionObserver | null = null

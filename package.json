@@ -16,6 +16,7 @@
     "@nuxt/typescript-runtime": "^0.3.2",
     "@nuxtjs/axios": "^5.3.6",
     "@types/smoothscroll-polyfill": "^0.3.1",
+    "intersection-observer": "^0.7.0",
     "nuxt": "^2.0.0",
     "smoothscroll-polyfill": "^0.4.4",
     "stylelint-scss": "^3.13.0",
