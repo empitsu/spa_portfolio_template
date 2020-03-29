@@ -40,7 +40,6 @@ const config: Configuration = {
   css: [
     '~/assets/vendor/bootstrap/css/bootstrap.min.css',
     '~/assets/vendor/font-awesome/css/font-awesome.min.css',
-    '~/assets/vendor/animate.css/animate.css',
     '~/assets/css/style.default.css',
     '~/assets/css/style.pink.css'
   ],

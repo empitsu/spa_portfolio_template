@@ -109,12 +109,16 @@
     >
       <section id="intro" ref="intro" class="intro-section pb-2">
         <div class="container text-center">
-          <VTransitionOnIntersection class="text-shadow mb-5 fadeInDown">
-            <h1>{{ portfolioData.firstName }} {{ portfolioData.lastName }}</h1>
+          <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+            <h1 class="text-shadow mb-5">
+              {{ portfolioData.firstName }} {{ portfolioData.lastName }}
+            </h1>
           </VTransitionOnIntersection>
-          <p data-animate="slideInUp" class="h3 text-shadow text-400">
-            {{ portfolioData.positionName }}
-          </p>
+          <VTransitionOnIntersection :animation-type="SLIDE_IN_UP">
+            <p class="h3 text-shadow text-400">
+              {{ portfolioData.positionName }}
+            </p>
+          </VTransitionOnIntersection>
         </div>
       </section>
     </VIntersectionObserver>
@@ -126,23 +130,29 @@
       <section id="about" ref="about" class="about-section">
         <div class="container">
           <header class="text-center">
-            <h2 data-animate="fadeInDown" class="title">About me</h2>
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title">About me</h2>
+            </VTransitionOnIntersection>
           </header>
           <div class="row">
-            <div data-animate="fadeInUp" class="col-lg-6">
-              <!-- eslint-disable vue/no-v-html -->
-              <p v-html="portfolioData.about.description"></p>
-              <!-- eslint-enable vue/no-v-html -->
-            </div>
-            <div data-animate="fadeInUp" class="col-lg-6">
-              <div class="col-sm-6 mx-auto mt-5">
-                <img
-                  :src="portfolioData.about.imagePath"
-                  alt="This is me"
-                  class="image rounded-circle img-fluid"
-                />
+            <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+              <div class="col-lg-6">
+                <!-- eslint-disable vue/no-v-html -->
+                <p v-html="portfolioData.about.description"></p>
+                <!-- eslint-enable vue/no-v-html -->
               </div>
-            </div>
+            </VTransitionOnIntersection>
+            <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+              <div class="col-lg-6">
+                <div class="col-sm-6 mx-auto mt-5">
+                  <img
+                    :src="portfolioData.about.imagePath"
+                    alt="This is me"
+                    class="image rounded-circle img-fluid"
+                  />
+                </div>
+              </div>
+            </VTransitionOnIntersection>
           </div>
         </div>
       </section>
@@ -159,13 +169,15 @@
       >
         <div class="container">
           <header class="text-center">
-            <h2 data-animate="fadeInDown" class="title">Highlights</h2>
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title">Highlights</h2>
+            </VTransitionOnIntersection>
           </header>
           <div class="row services text-center">
-            <div
+            <VTransitionOnIntersection
               v-for="(highlightItem, index) in portfolioData.highlights"
               :key="index"
-              data-animate="fadeInUp"
+              :animation-type="FADE_IN_UP"
               class="col-lg-4"
             >
               <div class="icon">
@@ -180,7 +192,7 @@
                 v-html="highlightItem.description"
               ></p>
               <!-- eslint-enable vue/no-v-html -->
-            </div>
+            </VTransitionOnIntersection>
           </div>
         </div>
       </section>
@@ -198,16 +210,19 @@
       >
         <div class="container text-center">
           <header>
-            <h2 data-animate="fadeInDown" class="title text-white">
-              My Career Goals
-            </h2>
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title text-white">
+                My Career Goals
+              </h2>
+            </VTransitionOnIntersection>
           </header>
           <!-- eslint-disable vue/no-v-html -->
-          <p
-            data-animate="slideInUp"
-            class="text-shadow text-400 animated slideInUp text-white"
-            v-html="portfolioData.careerGoal"
-          ></p>
+          <VTransitionOnIntersection :animation-type="SLIDE_IN_UP">
+            <p
+              class="text-shadow text-400 text-white"
+              v-html="portfolioData.careerGoal"
+            ></p>
+          </VTransitionOnIntersection>
           <!-- eslint-enable vue/no-v-html -->
         </div>
         <div class="dark-mask"></div>
@@ -220,9 +235,11 @@
       <section id="skills" ref="skills">
         <div class="container">
           <header class="text-center mb-2">
-            <h2 data-animate="fadeInUp" class="title">Skills</h2>
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title">Skills</h2>
+            </VTransitionOnIntersection>
           </header>
-          <div data-animate="fadeInUp">
+          <VTransitionOnIntersection :animation-type="FADE_IN_UP">
             <div
               v-for="(skinllCategory,
               skillCategoryIndex) in portfolioData.skills"
@@ -235,7 +252,7 @@
                 </li>
               </ul>
             </div>
-          </div>
+          </VTransitionOnIntersection>
         </div>
       </section>
     </VIntersectionObserver>
@@ -251,87 +268,99 @@
         <div class="container">
           <div class="col-sm-12">
             <div class="mb-5 text-center">
-              <h2 data-animate="fadeInUp" class="title">My work</h2>
-              <p data-animate="fadeInUp" class="lead">
-                I have worked on dozens of projects so I have picked only the
-                latest for you.
-              </p>
-            </div>
-            <ul id="filter" data-animate="fadeInUp">
-              <li class="active"><a href="#" data-filter="all">All</a></li>
-              <li><a href="#" data-filter="frontend">Front-end</a></li>
-              <li><a href="#" data-filter="design">Design</a></li>
-              <li><a href="#" data-filter="management">Management</a></li>
-              <li><a href="#" data-filter="other">Other</a></li>
-            </ul>
-            <!-- Reference detail-->
-            <div
-              v-for="(workItem, index) in portfolioData.works"
-              :key="index"
-              data-category="frontend"
-              class="works-item"
-            >
-              <div class="works-thumbnail">
-                <img :src="workItem.thumbImagePath" alt="" class="img-fluid" />
-              </div>
-              <div class="works-description">
-                <h3 class="h4 works-title">
-                  {{ workItem.title }}
-                </h3>
-                <p>
-                  <span class="project-date">{{ workItem.date }}</span>
+              <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+                <h2 class="title">My work</h2>
+              </VTransitionOnIntersection>
+              <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+                <p class="lead">
+                  I have worked on dozens of projects so I have picked only the
+                  latest for you.
                 </p>
-                <dl
-                  v-if="workItem.responsibilities"
-                  class="works-responsibility"
-                >
-                  <dt>Assigned process</dt>
-                  <dd
-                    v-for="(responsibilityName,
-                    responsibilityIndex) in workItem.responsibilities"
-                    :key="responsibilityIndex"
+              </VTransitionOnIntersection>
+            </div>
+            <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+              <ul id="filter">
+                <li class="active"><a href="#" data-filter="all">All</a></li>
+                <li><a href="#" data-filter="frontend">Front-end</a></li>
+                <li><a href="#" data-filter="design">Design</a></li>
+                <li><a href="#" data-filter="management">Management</a></li>
+                <li><a href="#" data-filter="other">Other</a></li>
+              </ul>
+            </VTransitionOnIntersection>
+            <!-- Reference detail-->
+            <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+              <div
+                v-for="(workItem, index) in portfolioData.works"
+                :key="index"
+                data-category="frontend"
+                class="works-item"
+              >
+                <div class="works-thumbnail">
+                  <img
+                    :src="workItem.thumbImagePath"
+                    alt=""
+                    class="img-fluid"
+                  />
+                </div>
+                <div class="works-description">
+                  <h3 class="h4 works-title">
+                    {{ workItem.title }}
+                  </h3>
+                  <p>
+                    <span class="project-date">{{ workItem.date }}</span>
+                  </p>
+                  <dl
+                    v-if="workItem.responsibilities"
+                    class="works-responsibility"
                   >
-                    {{ responsibilityName }}
-                  </dd>
-                </dl>
-                <dl v-if="workItem.roles" class="works-role">
-                  <dt>Responsibilities</dt>
-                  <dd
-                    v-for="(roleName, roleIndex) in workItem.roles"
-                    :key="roleIndex"
-                  >
-                    {{ roleName }}
-                  </dd>
-                </dl>
-                <dl v-if="workItem.techStacks" class="works-tech">
-                  <dt>Tech stack</dt>
-                  <dd
-                    v-for="(techName, techIndex) in workItem.techStacks"
-                    :key="techIndex"
-                  >
-                    {{ techName }}
-                  </dd>
-                </dl>
-                <div class="works-detail-wrap clearfix">
-                  <!-- eslint-disable vue/no-v-html -->
-                  <div
-                    id="works-tabelog-webpack"
-                    class="works-detail collapse"
-                    v-html="workItem.description"
-                  ></div>
-                  <!-- eslint-enable vue/no-v-html -->
-                  <button
-                    v-if="workItem.description"
-                    class="works-btn-more btn-link"
-                    data-toggle="collapse"
-                    data-target="#works-tabelog-webpack"
-                  >
-                    <span class="works-btn-more-text-normal">See more</span
-                    ><span class="works-btn-more-text-active">Show less</span>
-                  </button>
+                    <dt>Assigned process</dt>
+                    <dd
+                      v-for="(responsibilityName,
+                      responsibilityIndex) in workItem.responsibilities"
+                      :key="responsibilityIndex"
+                    >
+                      {{ responsibilityName }}
+                    </dd>
+                  </dl>
+                  <dl v-if="workItem.roles" class="works-role">
+                    <dt>Responsibilities</dt>
+                    <dd
+                      v-for="(roleName, roleIndex) in workItem.roles"
+                      :key="roleIndex"
+                    >
+                      {{ roleName }}
+                    </dd>
+                  </dl>
+                  <dl v-if="workItem.techStacks" class="works-tech">
+                    <dt>Tech stack</dt>
+                    <dd
+                      v-for="(techName, techIndex) in workItem.techStacks"
+                      :key="techIndex"
+                    >
+                      {{ techName }}
+                    </dd>
+                  </dl>
+                  <div class="works-detail-wrap clearfix">
+                    <!-- eslint-disable vue/no-v-html -->
+                    <div
+                      id="works-tabelog-webpack"
+                      class="works-detail collapse"
+                      v-html="workItem.description"
+                    ></div>
+                    <!-- eslint-enable vue/no-v-html -->
+                    <button
+                      v-if="workItem.description"
+                      class="works-btn-more btn-link"
+                      data-toggle="collapse"
+                      data-target="#works-tabelog-webpack"
+                    >
+                      <span class="works-btn-more-text-normal">See more</span
+                      ><span class="works-btn-more-text-active">Show less</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </VTransitionOnIntersection>
           </div>
         </div>
       </section>
@@ -343,29 +372,35 @@
       <section id="experience" ref="experience">
         <div class="container">
           <header class="text-center mb-2">
-            <h2 data-animate="fadeInUp" class="title">
-              Professional Experience
-            </h2>
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title">
+                Professional Experience
+              </h2>
+            </VTransitionOnIntersection>
           </header>
-          <div id="experience-timeline" data-animate="fadeInUp">
-            <div
-              v-for="(historyItem, index) in portfolioData.history"
-              :key="index"
-              class="vtimeline-point"
-            >
-              <div class="vtimeline-icon"><i class="fa fa-map-marker"></i></div>
-              <div class="vtimeline-block">
-                <span class="vtimeline-date">{{ historyItem.date }}</span>
-                <div class="vtimeline-content">
-                  <h3>{{ historyItem.companyName }}</h3>
-                  <h4>{{ historyItem.position }}</h4>
-                  <!-- eslint-disable vue/no-v-html -->
-                  <div v-html="historyItem.description"></div>
-                  <!-- eslint-enable vue/no-v-html -->
+          <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+            <div id="experience-timeline">
+              <div
+                v-for="(historyItem, index) in portfolioData.history"
+                :key="index"
+                class="vtimeline-point"
+              >
+                <div class="vtimeline-icon">
+                  <i class="fa fa-map-marker"></i>
+                </div>
+                <div class="vtimeline-block">
+                  <span class="vtimeline-date">{{ historyItem.date }}</span>
+                  <div class="vtimeline-content">
+                    <h3>{{ historyItem.companyName }}</h3>
+                    <h4>{{ historyItem.position }}</h4>
+                    <!-- eslint-disable vue/no-v-html -->
+                    <div v-html="historyItem.description"></div>
+                    <!-- eslint-enable vue/no-v-html -->
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </VTransitionOnIntersection>
         </div>
       </section>
     </VIntersectionObserver>
@@ -376,11 +411,14 @@
       <section id="education" ref="education">
         <div class="container">
           <header class="text-center mb-2">
-            <h2 data-animate="fadeInUp" class="title">Education</h2>
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title">Education</h2>
+            </VTransitionOnIntersection>
           </header>
-          <div
+          <VTransitionOnIntersection
             v-for="(educationItem, index) in portfolioData.education"
             :key="index"
+            :animation-type="FADE_IN_UP"
             class="education-block"
           >
             <h3>{{ educationItem.institutionName }}</h3>
@@ -390,7 +428,7 @@
 
             <p v-html="educationItem.description"></p>
             <!-- eslint-enable vue/no-v-html -->
-          </div>
+          </VTransitionOnIntersection>
         </div>
       </section>
     </VIntersectionObserver>
@@ -401,24 +439,28 @@
       <section id="certification" ref="certification">
         <div class="container">
           <header class="text-center mb-2">
-            <h2 data-animate="fadeInUp" class="title">
-              Licenses and Certification
-            </h2>
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title">
+                Licenses and Certification
+              </h2>
+            </VTransitionOnIntersection>
           </header>
-          <div class="certifications-block">
-            <ul class="certifications-list">
-              <li
-                v-for="(licenseItem, index) in portfolioData.licenses"
-                :key="index"
-                class="certifications-item"
-              >
-                <p class="certification-name">
-                  {{ licenseItem.title }}
-                </p>
-                <span class="certification-date">{{ licenseItem.date }}</span>
-              </li>
-            </ul>
-          </div>
+          <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+            <div class="certifications-block">
+              <ul class="certifications-list">
+                <li
+                  v-for="(licenseItem, index) in portfolioData.licenses"
+                  :key="index"
+                  class="certifications-item"
+                >
+                  <p class="certification-name">
+                    {{ licenseItem.title }}
+                  </p>
+                  <span class="certification-date">{{ licenseItem.date }}</span>
+                </li>
+              </ul>
+            </div>
+          </VTransitionOnIntersection>
         </div>
       </section>
     </VIntersectionObserver>
@@ -463,7 +505,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import smoothscroll from 'smoothscroll-polyfill'
 import VIntersectionObserver from '~/components/atoms/VIntersectionObserver/index.vue'
-import VTransitionOnIntersection from '~/components/molecules/VTransitionOnIntersection/index.vue'
+import VTransitionOnIntersection, {
+  AnimationType
+} from '~/components/molecules/VTransitionOnIntersection/index.vue'
 
 interface SkillCategory {
   categoryTitle: string
@@ -535,8 +579,18 @@ export default class extends Vue {
   @Prop() portfolioData!: PortfolioData
 
   public intersectingId = ''
-  // TODO: コンポーネント化
-  public isShow = false
+
+  public get FADE_IN_DOWN(): AnimationType {
+    return 'fadeInDown'
+  }
+
+  public get FADE_IN_UP(): AnimationType {
+    return 'fadeInUp'
+  }
+
+  public get SLIDE_IN_UP(): AnimationType {
+    return 'slideInUp'
+  }
 
   public get intersectionOptionsForNav(): IntersectionObserverInit {
     return { root: null, rootMargin: '-50% 0px', threshold: 0 }
@@ -921,10 +975,5 @@ export default class extends Vue {
 .fadeInDown {
   transform: translateY(-50px);
   opacity: 0;
-}
-.is-visible {
-  transform: translateY(0);
-  opacity: 1;
-  transition: all 0.8s cubic-bezier(0, 0, 0.18, 1);
 }
 </style>
