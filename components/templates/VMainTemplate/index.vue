@@ -109,14 +109,9 @@
     >
       <section id="intro" ref="intro" class="intro-section pb-2">
         <div class="container text-center">
-          <VIntersectionObserver @intersect="isShow = true">
-            <h1
-              :class="{ 'is-visible': isShow }"
-              class="text-shadow mb-5 fadeInDown"
-            >
-              {{ portfolioData.firstName }} {{ portfolioData.lastName }}
-            </h1>
-          </VIntersectionObserver>
+          <VTransitionOnIntersection class="text-shadow mb-5 fadeInDown">
+            <h1>{{ portfolioData.firstName }} {{ portfolioData.lastName }}</h1>
+          </VTransitionOnIntersection>
           <p data-animate="slideInUp" class="h3 text-shadow text-400">
             {{ portfolioData.positionName }}
           </p>
@@ -468,6 +463,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import smoothscroll from 'smoothscroll-polyfill'
 import VIntersectionObserver from '~/components/atoms/VIntersectionObserver/index.vue'
+import VTransitionOnIntersection from '~/components/molecules/VTransitionOnIntersection/index.vue'
 
 interface SkillCategory {
   categoryTitle: string
@@ -533,7 +529,7 @@ interface HTMLElementEvent<T extends HTMLElement> extends Event {
 }
 
 @Component({
-  components: { VIntersectionObserver }
+  components: { VIntersectionObserver, VTransitionOnIntersection }
 })
 export default class extends Vue {
   @Prop() portfolioData!: PortfolioData
