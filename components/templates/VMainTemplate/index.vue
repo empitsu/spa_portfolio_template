@@ -16,85 +16,17 @@
           </button>
           <div id="navbarcollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
+              <li
+                v-for="(navName, index) in navigationAry"
+                :key="index"
+                class="nav-item"
+              >
                 <a
-                  href="#intro"
+                  :href="`#${navName}`"
                   class="nav-link link-scroll"
-                  :class="{ active: 'intro' === intersectingId }"
+                  :class="{ active: navName === intersectingId }"
                   @click.prevent="onClickNavBtn"
-                  >Intro</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#about"
-                  class="nav-link link-scroll"
-                  :class="{ active: 'about' === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >About</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#highlights"
-                  class="nav-link link-scroll"
-                  :class="{ active: 'highlights' === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >Highlights</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#vision"
-                  class="nav-link link-scroll"
-                  :class="{ active: 'vision' === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >Vision</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#skills"
-                  class="nav-link link-scroll"
-                  :class="{ active: 'skills' === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >Skills</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#works"
-                  class="nav-link link-scroll"
-                  :class="{ active: 'works' === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >My work</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#experience"
-                  class="nav-link link-scroll"
-                  :class="{ active: 'experience' === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >Experience</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#education"
-                  class="nav-link link-scroll"
-                  :class="{ active: 'education' === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >Education</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="#certification"
-                  class="nav-link link-scroll"
-                  :class="{ active: 'certification' === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >Certification</a
+                  >{{ convertToCamelCase(navName) }}</a
                 >
               </li>
             </ul>
@@ -279,12 +211,33 @@
               </VTransitionOnIntersection>
             </div>
             <VTransitionOnIntersection :animation-type="FADE_IN_UP">
-              <ul id="filter">
-                <li class="active"><a href="#" data-filter="all">All</a></li>
-                <li><a href="#" data-filter="frontend">Front-end</a></li>
-                <li><a href="#" data-filter="design">Design</a></li>
-                <li><a href="#" data-filter="management">Management</a></li>
-                <li><a href="#" data-filter="other">Other</a></li>
+              <ul id="filter" class="works-category-btn-list">
+                <li
+                  class="works-category-btn-list__item"
+                  :class="{ active: 'all' === selectedWorksCategory }"
+                >
+                  <button
+                    class="works-category-btn-list__btn"
+                    type="button"
+                    @click="onClickWorksFilterBtn('all')"
+                  >
+                    All
+                  </button>
+                </li>
+                <li
+                  v-for="(categoryName, index) in worksCategoryList"
+                  :key="index"
+                  class="works-category-btn-list__item"
+                  :class="{ active: categoryName === selectedWorksCategory }"
+                >
+                  <button
+                    type="button"
+                    class="works-category-btn-list__btn"
+                    @click="onClickWorksFilterBtn(categoryName)"
+                  >
+                    {{ categoryName }}
+                  </button>
+                </li>
               </ul>
             </VTransitionOnIntersection>
             <!-- Reference detail-->
@@ -568,6 +521,18 @@ enum LinkType {
   GITHUB = 'github'
 }
 
+enum IntersectingId {
+  INTRO = 'intro',
+  ABOUT = 'about',
+  HIGHLIGHTS = 'highlights',
+  SKILLS = 'skills',
+  VISION = 'vision',
+  EXPERIENCE = 'experience',
+  WORKS = 'works',
+  CERTIFICATION = 'certification',
+  EDUCATION = 'education'
+}
+
 interface HTMLElementEvent<T extends HTMLElement> extends Event {
   target: T | null
 }
@@ -578,7 +543,27 @@ interface HTMLElementEvent<T extends HTMLElement> extends Event {
 export default class extends Vue {
   @Prop() portfolioData!: PortfolioData
 
-  public intersectingId = ''
+  public intersectingId: IntersectingId = IntersectingId.INTRO
+  public selectedWorksCategory: string = 'all'
+
+  public get worksCategoryList(): string[] {
+    const categoryAry = this.portfolioData.works.map((item) => item.category)
+    return [...new Set(categoryAry)]
+  }
+
+  public get navigationAry() {
+    return [
+      IntersectingId.INTRO,
+      IntersectingId.ABOUT,
+      IntersectingId.HIGHLIGHTS,
+      IntersectingId.SKILLS,
+      IntersectingId.VISION,
+      IntersectingId.EXPERIENCE,
+      IntersectingId.WORKS,
+      IntersectingId.CERTIFICATION,
+      IntersectingId.EDUCATION
+    ]
+  }
 
   public get FADE_IN_DOWN(): AnimationType {
     return 'fadeInDown'
@@ -607,6 +592,10 @@ export default class extends Vue {
     }
   }
 
+  public convertToCamelCase(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1)
+  }
+
   public linkIconName(type: LinkType): string {
     switch (type) {
       case LinkType.EMAIL:
@@ -632,13 +621,49 @@ export default class extends Vue {
     }
   }
 
-  public onIntersect(targetId: string): void {
+  public onClickWorksFilterBtn(categoryName: string): void {
+    this.selectedWorksCategory = categoryName
+  }
+
+  public onIntersect(targetId: IntersectingId): void {
     this.intersectingId = targetId
-    //
   }
 }
 </script>
 <style scoped>
+.works-category-btn-list {
+  text-align: center;
+  margin: 20px 0;
+  padding: 0;
+}
+.works-category-btn-list__item {
+  display: inline-block;
+  list-style-type: none;
+  font-family: 'Roboto Slab', serif;
+  border-top: solid 1px #ef5285;
+  border-bottom: solid 1px #ef5285;
+  margin: 0 10px 20px;
+  transition: all 0.3s;
+}
+
+.works-category-btn-list__btn {
+  display: inline-block;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ef5285;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.works-category-btn-list__item.active .works-category-btn-list__btn,
+.works-category-btn-list__item:hover .works-category-btn-list__btn {
+  color: #fff;
+  text-decoration: none;
+  background: #ef5285;
+}
+
 .works-title {
   font-family: 'Roboto', sans-serif;
   color: #555;
