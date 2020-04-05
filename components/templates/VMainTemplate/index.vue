@@ -293,24 +293,11 @@
                       {{ techName }}
                     </dd>
                   </dl>
-                  <div class="works-detail-wrap clearfix">
-                    <!-- eslint-disable vue/no-v-html -->
-                    <div
-                      id="works-tabelog-webpack"
-                      class="works-detail collapse"
-                      v-html="workItem.description"
-                    ></div>
-                    <!-- eslint-enable vue/no-v-html -->
-                    <button
-                      v-if="workItem.description"
-                      class="works-btn-more btn-link"
-                      data-toggle="collapse"
-                      data-target="#works-tabelog-webpack"
-                    >
-                      <span class="works-btn-more-text-normal">See more</span
-                      ><span class="works-btn-more-text-active">Show less</span>
-                    </button>
-                  </div>
+                  <!-- eslint-disable vue/no-v-html -->
+                  <VAccordion v-if="workItem.description" class="clearfix">
+                    <div v-html="workItem.description"></div>
+                  </VAccordion>
+                  <!-- eslint-enable vue/no-v-html -->
                 </div>
               </div>
             </VTransitionOnIntersection>
@@ -461,6 +448,7 @@ import VIntersectionObserver from '~/components/atoms/VIntersectionObserver/inde
 import VTransitionOnIntersection, {
   AnimationType
 } from '~/components/molecules/VTransitionOnIntersection/index.vue'
+import VAccordion from '~/components/molecules/VAccordion/index.vue'
 
 interface SkillCategory {
   categoryTitle: string
@@ -538,7 +526,7 @@ interface HTMLElementEvent<T extends HTMLElement> extends Event {
 }
 
 @Component({
-  components: { VIntersectionObserver, VTransitionOnIntersection }
+  components: { VIntersectionObserver, VTransitionOnIntersection, VAccordion }
 })
 export default class extends Vue {
   @Prop() portfolioData!: PortfolioData
@@ -684,52 +672,6 @@ export default class extends Vue {
 .works-description {
   padding-left: 230px;
 }
-.works-detail-wrap {
-  padding-top: 1rem;
-}
-.works-detail.is-hidden {
-  display: none;
-}
-.works-btn-more {
-  float: right;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-.works-btn-more::before {
-  display: inline-block;
-  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: '\f107';
-}
-.works-btn-more[aria-expanded='true']::before {
-  display: inline-block;
-  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: '\f106';
-}
-
-.works-btn-more:not([aria-expanded='true']) .works-btn-more-text-active {
-  display: none;
-}
-.works-btn-more:not([aria-expanded='true']) .works-btn-more-text-normal {
-  display: inline;
-}
-.works-btn-more[aria-expanded='true'] .works-btn-more-text-active {
-  display: inline;
-}
-.works-btn-more[aria-expanded='true'] .works-btn-more-text-normal {
-  display: none;
-}
-
 .project-date {
   color: #74808a;
 }
