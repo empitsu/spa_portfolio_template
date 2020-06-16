@@ -17,7 +17,7 @@ import VMainTemplate, {
   ): Promise<{
     portfolioData: PortfolioData
   }> {
-    const result = await ctx.$axios.$get('http://localhost:8080/portfolio-data')
+    const result = await ctx.$axios.$get('http://localhost:4010/portfolio-data')
     return {
       portfolioData: result
     }
