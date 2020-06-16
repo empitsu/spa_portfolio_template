@@ -5,11 +5,12 @@
 </template>
 
 <style>
-html {
-  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN',
+:root {
+  --fontFamily: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN',
     'Hiragino Sans', Meiryo, sans-serif;
-  /* font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif; */
+}
+body {
+  font-family: var(--fontFamily);
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;

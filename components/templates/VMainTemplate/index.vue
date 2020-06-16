@@ -364,7 +364,7 @@
           >
             <h3>{{ educationItem.institutionName }}</h3>
             <span class="education-date">{{ educationItem.date }}</span>
-            <h4>{{ educationItem.date }}</h4>
+            <h4>{{ educationItem.degree }}</h4>
             <!-- eslint-disable vue/no-v-html -->
 
             <p v-html="educationItem.description"></p>
@@ -751,16 +751,17 @@ export default class extends Vue {
 }
 
 .vtimeline-content h3 {
+  font-family: var(--fontFamily);
   font-size: 1.5em;
-  font-weight: 300;
+  font-weight: 400;
   color: #374054;
   display: inline-block;
-  margin: 0;
 }
 
 .vtimeline-content h4 {
+  font-family: var(--fontFamily);
   font-size: 1.2em;
-  font-weight: 300;
+  font-weight: 400;
   color: #7e8890;
   margin: 0 0 15px 0;
 }
@@ -783,7 +784,7 @@ export default class extends Vue {
   color: #fff;
   width: 50px;
   height: 50px;
-  background: #3498db;
+  background: #ef5285;
   border-radius: 50%;
   float: left;
   z-index: 99;
@@ -802,7 +803,6 @@ export default class extends Vue {
   position: absolute;
   left: 0;
   top: 10px;
-  font-weight: 300;
   color: #374054;
 }
 
@@ -815,9 +815,9 @@ export default class extends Vue {
 }
 
 .education-block h3 {
-  font-weight: 500;
+  font-family: var(--fontFamily);
+  font-weight: 400;
   float: left;
-  margin: 0;
   color: #374054;
 }
 
@@ -827,9 +827,11 @@ export default class extends Vue {
 }
 
 .education-block h4 {
+  font-family: var(--fontFamily);
+  font-size: 1.2rem;
   color: #74808a;
   clear: both;
-  font-weight: 500;
+  font-weight: 400;
   margin: 0 0 15px 0;
 }
 
@@ -888,7 +890,7 @@ export default class extends Vue {
   right: auto;
   height: 100%;
   width: 3px;
-  background: #3498db;
+  background: #ef5285;
   z-index: 0;
 }
 
@@ -897,8 +899,8 @@ export default class extends Vue {
   content: '';
   width: 3px;
   height: 40px;
-  background: #3498db;
-  background: linear-gradient(to bottom, #3498db, rgba(52, 152, 219, 0));
+  background: #ef5285;
+  background: linear-gradient(to bottom, #ef5285, rgba(52, 152, 219, 0));
   top: 100%;
   left: 303px;
 }
