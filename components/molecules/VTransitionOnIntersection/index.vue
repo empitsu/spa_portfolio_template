@@ -47,7 +47,7 @@ export default class extends Vue {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 50px, 0);
   }
 
   to {
@@ -63,7 +63,7 @@ export default class extends Vue {
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -50px, 0);
   }
 
   to {
@@ -74,7 +74,7 @@ export default class extends Vue {
 
 @keyframes slideInUp {
   from {
-    transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 50px, 0);
     visibility: visible;
   }
 

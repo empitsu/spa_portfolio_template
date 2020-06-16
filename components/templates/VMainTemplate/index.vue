@@ -242,64 +242,65 @@
             </VTransitionOnIntersection>
             <!-- Reference detail-->
             <VTransitionOnIntersection :animation-type="FADE_IN_UP">
-              <div
-                v-for="(workItem, index) in portfolioData.works"
-                :key="index"
-                data-category="frontend"
-                class="works-item"
-              >
-                <div class="works-thumbnail">
-                  <img
-                    :src="workItem.thumbImagePath"
-                    alt=""
-                    class="img-fluid"
-                  />
+              <transition-group name="works-filter" tag="div">
+                <div
+                  v-for="workItem in activeWorks"
+                  :key="workItem.id"
+                  class="works-item"
+                >
+                  <div class="works-thumbnail">
+                    <img
+                      :src="workItem.thumbImagePath"
+                      alt=""
+                      class="img-fluid"
+                    />
+                  </div>
+                  <div class="works-description">
+                    <h3 class="h4 works-title">
+                      {{ workItem.title }}
+                    </h3>
+                    <p>
+                      <span class="project-date">{{ workItem.date }}</span>
+                    </p>
+                    <dl
+                      v-if="workItem.responsibilities"
+                      class="works-responsibility"
+                    >
+                      <dt>Assigned process</dt>
+                      <dd
+                        v-for="(responsibilityName,
+                        responsibilityIndex) in workItem.responsibilities"
+                        :key="responsibilityIndex"
+                      >
+                        {{ responsibilityName }}
+                      </dd>
+                    </dl>
+                    <dl v-if="workItem.roles" class="works-role">
+                      <dt>Responsibilities</dt>
+                      <dd
+                        v-for="(roleName, roleIndex) in workItem.roles"
+                        :key="roleIndex"
+                      >
+                        {{ roleName }}
+                      </dd>
+                    </dl>
+                    <dl v-if="workItem.techStacks" class="works-tech">
+                      <dt>Tech stack</dt>
+                      <dd
+                        v-for="(techName, techIndex) in workItem.techStacks"
+                        :key="techIndex"
+                      >
+                        {{ techName }}
+                      </dd>
+                    </dl>
+                    <!-- eslint-disable vue/no-v-html -->
+                    <VAccordion v-if="workItem.description" class="clearfix">
+                      <div v-html="workItem.description"></div>
+                    </VAccordion>
+                    <!-- eslint-enable vue/no-v-html -->
+                  </div>
                 </div>
-                <div class="works-description">
-                  <h3 class="h4 works-title">
-                    {{ workItem.title }}
-                  </h3>
-                  <p>
-                    <span class="project-date">{{ workItem.date }}</span>
-                  </p>
-                  <dl
-                    v-if="workItem.responsibilities"
-                    class="works-responsibility"
-                  >
-                    <dt>Assigned process</dt>
-                    <dd
-                      v-for="(responsibilityName,
-                      responsibilityIndex) in workItem.responsibilities"
-                      :key="responsibilityIndex"
-                    >
-                      {{ responsibilityName }}
-                    </dd>
-                  </dl>
-                  <dl v-if="workItem.roles" class="works-role">
-                    <dt>Responsibilities</dt>
-                    <dd
-                      v-for="(roleName, roleIndex) in workItem.roles"
-                      :key="roleIndex"
-                    >
-                      {{ roleName }}
-                    </dd>
-                  </dl>
-                  <dl v-if="workItem.techStacks" class="works-tech">
-                    <dt>Tech stack</dt>
-                    <dd
-                      v-for="(techName, techIndex) in workItem.techStacks"
-                      :key="techIndex"
-                    >
-                      {{ techName }}
-                    </dd>
-                  </dl>
-                  <!-- eslint-disable vue/no-v-html -->
-                  <VAccordion v-if="workItem.description" class="clearfix">
-                    <div v-html="workItem.description"></div>
-                  </VAccordion>
-                  <!-- eslint-enable vue/no-v-html -->
-                </div>
-              </div>
+              </transition-group>
             </VTransitionOnIntersection>
           </div>
         </div>
@@ -448,7 +449,7 @@ import VIntersectionObserver from '~/components/atoms/VIntersectionObserver/inde
 import VTransitionOnIntersection, {
   AnimationType
 } from '~/components/molecules/VTransitionOnIntersection/index.vue'
-import VAccordion from '~/components/molecules/VAccordion/index.vue'
+import VAccordion from '~/components/atoms/VAccordion/index.vue'
 
 interface SkillCategory {
   categoryTitle: string
@@ -456,7 +457,8 @@ interface SkillCategory {
 }
 
 interface WorkItem {
-  category: string
+  id: number
+  categories: string[]
   title: string
   date: string
   responsibilities: string[]
@@ -534,9 +536,19 @@ export default class extends Vue {
   public intersectingId: IntersectingId = IntersectingId.INTRO
   public selectedWorksCategory: string = 'all'
 
+  public get activeWorks(): WorkItem[] {
+    return this.selectedWorksCategory === 'all'
+      ? this.portfolioData.works
+      : this.portfolioData.works.filter(({ categories }) =>
+          categories.includes(this.selectedWorksCategory)
+        )
+  }
+
   public get worksCategoryList(): string[] {
-    const categoryAry = this.portfolioData.works.map((item) => item.category)
-    return [...new Set(categoryAry)]
+    const categoriesAry = this.portfolioData.works.map(
+      (item) => item.categories
+    )
+    return [...new Set(categoriesAry.flat())]
   }
 
   public get navigationAry() {
@@ -544,10 +556,10 @@ export default class extends Vue {
       IntersectingId.INTRO,
       IntersectingId.ABOUT,
       IntersectingId.HIGHLIGHTS,
-      IntersectingId.SKILLS,
       IntersectingId.VISION,
-      IntersectingId.EXPERIENCE,
+      IntersectingId.SKILLS,
       IntersectingId.WORKS,
+      IntersectingId.EXPERIENCE,
       IntersectingId.CERTIFICATION,
       IntersectingId.EDUCATION
     ]
@@ -619,6 +631,17 @@ export default class extends Vue {
 }
 </script>
 <style scoped>
+.works-filter-enter-active {
+  transition: all 1s;
+}
+.works-filter-enter,
+.works-filter-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.works-filter-move {
+  transition: transform 1s;
+}
 .works-category-btn-list {
   text-align: center;
   margin: 20px 0;
@@ -936,11 +959,5 @@ export default class extends Vue {
   .education-block span {
     float: none;
   }
-}
-
-/* TODO:コンポーネント化*/
-.fadeInDown {
-  transform: translateY(-50px);
-  opacity: 0;
 }
 </style>
