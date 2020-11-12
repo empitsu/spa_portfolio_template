@@ -51,12 +51,17 @@ export default class extends Vue {
 }
 
 .v-accordion__trigger-btn {
-  float: right;
+  width: 100%;
+  background: transparent;
   border: none;
   outline: none;
   cursor: pointer;
   font-weight: 400;
   color: #ef5285;
+  text-align: right;
+}
+.v-accordion__trigger-btn:hover {
+  text-decoration: underline;
 }
 .v-accordion__trigger-btn::before {
   display: inline-block;
