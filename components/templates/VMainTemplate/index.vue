@@ -294,7 +294,7 @@
                       </dd>
                     </dl>
                     <!-- eslint-disable vue/no-v-html -->
-                    <VAccordion v-if="workItem.description" class="clearfix">
+                    <VAccordion v-if="workItem.description">
                       <div v-html="workItem.description"></div>
                     </VAccordion>
                     <!-- eslint-enable vue/no-v-html -->
@@ -558,6 +558,7 @@ enum IntersectingId {
   VISION = 'vision',
   EXPERIENCE = 'experience',
   WORKS = 'works',
+  ARTICLES = 'articles',
   CERTIFICATION = 'certification',
   EDUCATION = 'education'
 }
@@ -598,9 +599,10 @@ export default class extends Vue {
       IntersectingId.VISION,
       IntersectingId.SKILLS,
       IntersectingId.WORKS,
+      IntersectingId.ARTICLES,
       IntersectingId.EXPERIENCE,
-      IntersectingId.CERTIFICATION,
-      IntersectingId.EDUCATION
+      IntersectingId.EDUCATION,
+      IntersectingId.CERTIFICATION
     ]
   }
 
