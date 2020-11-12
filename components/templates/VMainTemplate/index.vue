@@ -308,6 +308,45 @@
     </VIntersectionObserver>
     <VIntersectionObserver
       :options="intersectionOptionsForNav"
+      @intersect="onIntersect('articles')"
+    >
+      <section id="articles" ref="articles">
+        <div class="container">
+          <header class="text-center mb-2">
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title">
+                Articles
+              </h2>
+            </VTransitionOnIntersection>
+          </header>
+          <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+            <div class="articles-block">
+              <dl class="articles-item">
+                <template
+                  v-for="(articleItem, index) in portfolioData.articles"
+                >
+                  <dt :key="index" class="articles-title">
+                    <a
+                      class="articles-link"
+                      :href="articleItem.link"
+                      target="_blank"
+                      rel="noopener"
+                      >{{ articleItem.text }}</a
+                    >
+                  </dt>
+                  <dd :key="index" class="articles-description">
+                    {{ articleItem.description }}
+                  </dd>
+                </template>
+              </dl>
+            </div>
+          </VTransitionOnIntersection>
+        </div>
+      </section>
+    </VIntersectionObserver>
+
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
       @intersect="onIntersect('experience')"
     >
       <section id="experience" ref="experience">
@@ -387,7 +426,7 @@
             </VTransitionOnIntersection>
           </header>
           <VTransitionOnIntersection :animation-type="FADE_IN_UP">
-            <div class="certifications-block">
+            <div class="articles-block">
               <ul class="certifications-list">
                 <li
                   v-for="(licenseItem, index) in portfolioData.licenses"
@@ -426,7 +465,7 @@
           <!-- /.6-->
           <div class="col-md-6 text-center text-lg-right mt-4 mt-lg-0">
             <p>
-              © 2019 {{ portfolioData.firstName }} {{ portfolioData.lastName }}.
+              © 2020 {{ portfolioData.firstName }} {{ portfolioData.lastName }}.
               All rights reserved.
             </p>
           </div>
@@ -930,6 +969,36 @@ export default class extends Vue {
 }
 .certification-date {
   color: #6c757d;
+}
+
+.articles-block {
+  max-width: 700px;
+  border: 1px solid #dcd9d9;
+  border-radius: 3px;
+  margin: 0 auto 30px auto;
+  padding: 30px;
+  text-align: left;
+}
+
+.articles-title {
+  padding: 0 0 12px 0;
+}
+
+.articles-link::after {
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font: normal normal normal 14px/1 FontAwesome;
+  content: '\f08e';
+  margin-left: 0.3rem;
+}
+
+.articles-description {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  color: #555;
+}
+
+.articles-description:not(:last-child) {
+  border-bottom: 1px solid #dcd9d9;
 }
 
 @media only screen and (max-width: 750px) {
