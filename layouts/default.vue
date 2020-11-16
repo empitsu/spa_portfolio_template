@@ -11,7 +11,7 @@
 }
 body {
   font-family: var(--fontFamily);
-  font-size: 16px;
+  font-size: 1rem;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
