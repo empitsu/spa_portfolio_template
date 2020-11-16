@@ -22,12 +22,24 @@ const config: Configuration = {
         rel: 'stylesheet',
         href:
           'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700%7CRoboto:400,700,300'
+      },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css',
+        integrity:
+          'sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2',
+        crossorigin: 'anonymous'
       }
     ],
     script: [
       { src: '/__/firebase/7.6.1/firebase-app.js' },
       { src: '/__/firebase/7.6.1/firebase-analytics.js' },
-      { src: '/__/firebase/init.js' }
+      { src: '/__/firebase/init.js' },
+      {
+        src: 'https://kit.fontawesome.com/9d28920b83.js',
+        crossorigin: 'anonymous'
+      }
     ]
   },
   /*
@@ -37,12 +49,7 @@ const config: Configuration = {
   /*
    ** Global CSS
    */
-  css: [
-    '~/assets/vendor/bootstrap/css/bootstrap.min.css',
-    '~/assets/vendor/font-awesome/css/font-awesome.min.css',
-    '~/assets/css/style.default.css',
-    '~/assets/css/style.pink.css'
-  ],
+  css: ['~/assets/css/style.default.css', '~/assets/css/style.pink.css'],
   /*
    ** Plugins to load before mounting the App
    */
