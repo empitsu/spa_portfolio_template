@@ -106,25 +106,33 @@
             </VTransitionOnIntersection>
           </header>
           <div class="row services text-center">
-            <VTransitionOnIntersection
+            <template
               v-for="(highlightItem, index) in portfolioData.highlights"
-              :key="index"
-              :animation-type="FADE_IN_UP"
-              class="col-lg-4"
             >
-              <div class="icon">
-                <i :class="`fa fa-${highlightItem.icon}`"></i>
-              </div>
-              <h3 class="heading mb-3 text-400">
-                {{ highlightItem.title }}
-              </h3>
-              <!-- eslint-disable vue/no-v-html -->
-              <p
-                class="text-left description"
-                v-html="highlightItem.description"
-              ></p>
-              <!-- eslint-enable vue/no-v-html -->
-            </VTransitionOnIntersection>
+              <VTransitionOnIntersection
+                :key="`item${index}`"
+                :animation-type="FADE_IN_UP"
+                class="col"
+              >
+                <div class="icon">
+                  <i :class="`fa fa-${highlightItem.icon}`"></i>
+                </div>
+                <h3 class="heading mb-3 text-400">
+                  {{ highlightItem.title }}
+                </h3>
+                <!-- eslint-disable vue/no-v-html -->
+                <div
+                  class="text-left description"
+                  v-html="highlightItem.description"
+                ></div>
+                <!-- eslint-enable vue/no-v-html -->
+              </VTransitionOnIntersection>
+              <div
+                v-if="index % 2 === 1"
+                :key="`wrap${index}`"
+                class="w-100"
+              ></div>
+            </template>
           </div>
         </div>
       </section>
@@ -203,12 +211,6 @@
               <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
                 <h2 class="title">My work</h2>
               </VTransitionOnIntersection>
-              <VTransitionOnIntersection :animation-type="FADE_IN_UP">
-                <p class="lead">
-                  I have worked on dozens of projects so I have picked only the
-                  latest for you.
-                </p>
-              </VTransitionOnIntersection>
             </div>
             <VTransitionOnIntersection :animation-type="FADE_IN_UP">
               <ul id="filter" class="works-category-btn-list">
@@ -256,7 +258,7 @@
                     />
                   </div>
                   <div class="works-description">
-                    <h3 class="h4 works-title">
+                    <h3 class="works-title">
                       {{ workItem.title }}
                     </h3>
                     <p>
@@ -325,7 +327,7 @@
                 <template
                   v-for="(articleItem, index) in portfolioData.articles"
                 >
-                  <dt :key="index" class="articles-title">
+                  <dt :key="`title${index}`" class="articles-title">
                     <a
                       class="articles-link"
                       :href="articleItem.link"
@@ -334,7 +336,7 @@
                       >{{ articleItem.text }}</a
                     >
                   </dt>
-                  <dd :key="index" class="articles-description">
+                  <dd :key="`description${index}`" class="articles-description">
                     {{ articleItem.description }}
                   </dd>
                 </template>
@@ -365,14 +367,12 @@
                 :key="index"
                 class="vtimeline-point"
               >
-                <div class="vtimeline-icon">
-                  <i class="fa fa-map-marker"></i>
-                </div>
                 <div class="vtimeline-block">
-                  <span class="vtimeline-date">{{ historyItem.date }}</span>
                   <div class="vtimeline-content">
                     <h3>{{ historyItem.companyName }}</h3>
+                    <p class="vtimeline-date">{{ historyItem.date }}</p>
                     <h4>{{ historyItem.position }}</h4>
+
                     <!-- eslint-disable vue/no-v-html -->
                     <div v-html="historyItem.description"></div>
                     <!-- eslint-enable vue/no-v-html -->
@@ -717,9 +717,10 @@ export default class extends Vue {
 }
 
 .works-title {
-  font-family: 'Roboto', sans-serif;
   color: #555;
+  font-family: var(--fontFamily);
   font-weight: normal;
+  font-size: 1.3rem;
 }
 .works-item {
   position: relative;
@@ -777,7 +778,7 @@ export default class extends Vue {
 }
 
 .vtimeline-content {
-  margin-left: 350px;
+  margin-left: 50px;
   background: #fff;
   border: 1px solid #e6e6e6;
   padding: 15px;
@@ -793,58 +794,53 @@ export default class extends Vue {
 
 .vtimeline-content h3 {
   font-family: var(--fontFamily);
-  font-size: 1.5em;
+  font-size: 1.3rem;
   font-weight: 400;
-  color: #374054;
   display: inline-block;
 }
 
 .vtimeline-content h4 {
   font-family: var(--fontFamily);
-  font-size: 1.2em;
+  font-size: 1rem;
   font-weight: 400;
-  color: #7e8890;
   margin: 0 0 15px 0;
-}
-
-.vtimeline-content p {
-  color: #74808a;
-  font-size: 0.9em;
-  margin: 0;
 }
 
 .vtimeline-point {
   position: relative;
   display: block;
-  vertical-align: top;
   margin-bottom: 30px;
+}
+
+.vtimeline-point::before {
+  position: absolute;
+  top: 17px;
+  left: 0;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: 'Font Awesome 5 Free';
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #ef5285;
+  content: '\f111';
 }
 
 .vtimeline-icon {
   position: relative;
-  color: #fff;
-  width: 50px;
-  height: 50px;
-  background: #ef5285;
-  border-radius: 50%;
   float: left;
   z-index: 99;
-  margin-left: 280px;
+  padding-top: 20px;
 }
 
 .vtimeline-icon i {
   display: block;
-  font-size: 2em;
-  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #ef5285;
 }
 
 .vtimeline-date {
-  width: 260px;
-  text-align: right;
-  position: absolute;
-  left: 0;
-  top: 10px;
-  color: #374054;
+  color: #74808a;
+  font-size: 0.9em;
+  margin-bottom: 10px;
 }
 
 .education-block {
@@ -859,7 +855,7 @@ export default class extends Vue {
   font-family: var(--fontFamily);
   font-weight: 400;
   float: left;
-  color: #374054;
+  font-size: 1.3rem;
 }
 
 .education-block span {
@@ -869,18 +865,11 @@ export default class extends Vue {
 
 .education-block h4 {
   font-family: var(--fontFamily);
-  font-size: 1.2rem;
   color: #74808a;
   clear: both;
+  font-size: 1rem;
   font-weight: 400;
   margin: 0 0 15px 0;
-}
-
-.education-block p,
-.education-block ul {
-  margin: 0;
-  color: #74808a;
-  font-size: 0.9em;
 }
 
 .education-block ul {
@@ -919,31 +908,20 @@ export default class extends Vue {
 #experience-timeline {
   margin: 30px auto 0 auto;
   position: relative;
-  max-width: 1000px;
+  max-width: 850px;
 }
 
-#experience-timeline:before {
+#experience-timeline::before {
   position: absolute;
   content: '';
-  top: 0;
+  top: 20px;
   bottom: 0;
-  left: 303px;
+  left: 5px;
   right: auto;
   height: 100%;
-  width: 3px;
+  width: 2px;
   background: #ef5285;
   z-index: 0;
-}
-
-#experience-timeline:after {
-  position: absolute;
-  content: '';
-  width: 3px;
-  height: 40px;
-  background: #ef5285;
-  background: linear-gradient(to bottom, #ef5285, rgba(52, 152, 219, 0));
-  top: 100%;
-  left: 303px;
 }
 
 .certifications-block {
@@ -996,14 +974,16 @@ export default class extends Vue {
 .articles-description {
   margin-bottom: 20px;
   padding-bottom: 15px;
+  border-bottom: 1px solid #dcd9d9;
   color: #555;
 }
 
-.articles-description:not(:last-child) {
-  border-bottom: 1px solid #dcd9d9;
+.articles-description:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
-@media only screen and (max-width: 750px) {
+/* @media only screen and (max-width: 750px) {
   #experience-timeline:before,
   #experience-timeline:after {
     left: 23px;
@@ -1025,7 +1005,7 @@ export default class extends Vue {
   .vtimeline-content {
     margin-left: 70px;
   }
-}
+} */
 
 @media only screen and (max-width: 768px) {
   .education-block h3,
