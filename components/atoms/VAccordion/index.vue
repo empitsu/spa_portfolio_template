@@ -1,20 +1,26 @@
 <template>
   <div :class="$options.name">
+    <button
+      v-if="!isOpen"
+      :class="`${$options.name}__trigger-btn`"
+      :aria-expanded="isOpen"
+      @click="onClickToggleBtn"
+    >
+      <span :class="`${$options.name}__trigger-btn-text-normal`">See more</span>
+    </button>
     <transition name="slide">
       <div v-show="isOpen" :class="`${$options.name}__body`">
         <slot>default</slot>
       </div>
     </transition>
     <button
+      v-if="isOpen"
       :class="`${$options.name}__trigger-btn`"
       :aria-expanded="isOpen"
       @click="onClickToggleBtn"
     >
-      <span v-if="isOpen" :class="`${$options.name}__trigger-btn-text-active`"
+      <span :class="`${$options.name}__trigger-btn-text-active`"
         >Show less</span
-      >
-      <span v-else :class="`${$options.name}__trigger-btn-text-normal`"
-        >See more</span
       >
     </button>
   </div>
@@ -38,7 +44,7 @@ export default class extends Vue {
   transition: all 0.3s ease;
 }
 .slide-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.3s ease;
 }
 .slide-enter,
 .slide-leave-to {
@@ -72,6 +78,7 @@ export default class extends Vue {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: '\f107';
+  margin-right: 5px;
 }
 .v-accordion__trigger-btn[aria-expanded='true']::before {
   display: inline-block;
