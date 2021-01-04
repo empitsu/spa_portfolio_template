@@ -151,9 +151,7 @@
         <div class="container text-center">
           <header>
             <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
-              <h2 class="title text-white">
-                My Career Goals
-              </h2>
+              <h2 class="title text-white">My Career Goals</h2>
             </VTransitionOnIntersection>
           </header>
           <!-- eslint-disable vue/no-v-html -->
@@ -181,8 +179,9 @@
           </header>
           <VTransitionOnIntersection :animation-type="FADE_IN_UP">
             <div
-              v-for="(skinllCategory,
-              skillCategoryIndex) in portfolioData.skills"
+              v-for="(
+                skinllCategory, skillCategoryIndex
+              ) in portfolioData.skills"
               :key="skillCategoryIndex"
             >
               <h3>{{ skinllCategory.categoryTitle }}</h3>
@@ -270,8 +269,9 @@
                     >
                       <dt>Assigned process</dt>
                       <dd
-                        v-for="(responsibilityName,
-                        responsibilityIndex) in workItem.responsibilities"
+                        v-for="(
+                          responsibilityName, responsibilityIndex
+                        ) in workItem.responsibilities"
                         :key="responsibilityIndex"
                       >
                         {{ responsibilityName }}
@@ -316,9 +316,7 @@
         <div class="container">
           <header class="text-center mb-2">
             <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
-              <h2 class="title">
-                Articles
-              </h2>
+              <h2 class="title">Articles</h2>
             </VTransitionOnIntersection>
           </header>
           <VTransitionOnIntersection :animation-type="FADE_IN_UP">
@@ -355,9 +353,7 @@
         <div class="container">
           <header class="text-center mb-2">
             <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
-              <h2 class="title">
-                Professional Experience
-              </h2>
+              <h2 class="title">Professional Experience</h2>
             </VTransitionOnIntersection>
           </header>
           <VTransitionOnIntersection :animation-type="FADE_IN_UP">
@@ -420,9 +416,7 @@
         <div class="container">
           <header class="text-center mb-2">
             <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
-              <h2 class="title">
-                Licenses and Certification
-              </h2>
+              <h2 class="title">Licenses and Certification</h2>
             </VTransitionOnIntersection>
           </header>
           <VTransitionOnIntersection :animation-type="FADE_IN_UP">
@@ -486,7 +480,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import smoothscroll from 'smoothscroll-polyfill'
 import VIntersectionObserver from '~/components/atoms/VIntersectionObserver/index.vue'
 import VTransitionOnIntersection, {
-  AnimationType
+  AnimationType,
 } from '~/components/molecules/VTransitionOnIntersection/index.vue'
 import VAccordion from '~/components/atoms/VAccordion/index.vue'
 
@@ -547,7 +541,7 @@ enum LinkType {
   INSTAGRAM = 'instagram',
   LINKEDIN = 'linkedin',
   EMAIL = 'email',
-  GITHUB = 'github'
+  GITHUB = 'github',
 }
 
 enum IntersectingId {
@@ -560,7 +554,7 @@ enum IntersectingId {
   WORKS = 'works',
   ARTICLES = 'articles',
   CERTIFICATION = 'certification',
-  EDUCATION = 'education'
+  EDUCATION = 'education',
 }
 
 interface HTMLElementEvent<T extends HTMLElement> extends Event {
@@ -568,7 +562,7 @@ interface HTMLElementEvent<T extends HTMLElement> extends Event {
 }
 
 @Component({
-  components: { VIntersectionObserver, VTransitionOnIntersection, VAccordion }
+  components: { VIntersectionObserver, VTransitionOnIntersection, VAccordion },
 })
 export default class extends Vue {
   @Prop() portfolioData!: PortfolioData
@@ -602,7 +596,7 @@ export default class extends Vue {
       IntersectingId.ARTICLES,
       IntersectingId.EXPERIENCE,
       IntersectingId.EDUCATION,
-      IntersectingId.CERTIFICATION
+      IntersectingId.CERTIFICATION,
     ]
   }
 

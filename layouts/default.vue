@@ -6,8 +6,8 @@
 
 <style>
 :root {
-  --fontFamily: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN',
-    'Hiragino Sans', Meiryo, sans-serif;
+  --fontFamily: 'Helvetica Neue', arial, 'Hiragino Kaku Gothic ProN',
+    'Hiragino Sans', meiryo, sans-serif;
 }
 body {
   font-family: var(--fontFamily);
@@ -22,8 +22,8 @@ body {
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
 }

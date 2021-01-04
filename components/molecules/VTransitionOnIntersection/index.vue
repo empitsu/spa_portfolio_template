@@ -12,7 +12,7 @@ import VIntersectionObserver from '~/components/atoms/VIntersectionObserver/inde
 export type AnimationType = 'slideInUp' | 'fadeInDown' | 'fadeInUp' | undefined
 
 @Component({
-  components: { VIntersectionObserver }
+  components: { VIntersectionObserver },
 })
 export default class extends Vue {
   @Prop({ type: String, default: 'slideInUp' }) animationType?: AnimationType

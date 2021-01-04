@@ -5,12 +5,12 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { Context } from '@nuxt/types'
 import VMainTemplate, {
-  PortfolioData
+  PortfolioData,
 } from '~/components/templates/VMainTemplate/index.vue'
 
 @Component({
   components: {
-    VMainTemplate
+    VMainTemplate,
   },
   async asyncData(
     ctx: Context
@@ -19,9 +19,9 @@ import VMainTemplate, {
   }> {
     const result = await ctx.$axios.$get('http://localhost:4010/portfolio-data')
     return {
-      portfolioData: result
+      portfolioData: result,
     }
-  }
+  },
 })
 export default class extends Vue {
   portfolioData = {} as PortfolioData

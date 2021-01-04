@@ -29,7 +29,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component({
-  name: 'v-accordion'
+  name: 'v-accordion',
 })
 export default class extends Vue {
   public isOpen = false
