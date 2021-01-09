@@ -50,7 +50,7 @@ const config: NuxtConfig = {
   /*
    ** Global CSS
    */
-  css: ['~/assets/css/style.default.css', '~/assets/css/style.pink.css'],
+  css: ['~/assets/vendor/bootstrapious/style.default.css', '~/assets/vendor/bootstrapious/style.pink.css'],
   /*
    ** Plugins to load before mounting the App
    */
