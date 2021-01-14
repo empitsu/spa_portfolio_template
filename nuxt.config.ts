@@ -3,6 +3,10 @@ import { NuxtConfig } from '@nuxt/types'
 const config: NuxtConfig = {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
+  privateRuntimeConfig: {
+    portfolioDataPath:
+      process.env.PORTFOLIO_DATA_PATH || 'http://localhost:4010/portfolio-data',
+  },
   /*
    ** Headers of the page
    */
@@ -14,15 +18,15 @@ const config: NuxtConfig = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: process.env.npm_package_description || '',
+      },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700%7CRoboto:400,700,300'
+          'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700%7CRoboto:400,700,300',
       },
       {
         rel: 'stylesheet',
@@ -30,18 +34,18 @@ const config: NuxtConfig = {
           'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css',
         integrity:
           'sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2',
-        crossorigin: 'anonymous'
-      }
+        crossorigin: 'anonymous',
+      },
     ],
     script: [
-      { src: '/__/firebase/7.6.1/firebase-app.js' },
-      { src: '/__/firebase/7.6.1/firebase-analytics.js' },
+      { src: '/__/firebase/8.2.2/firebase-app.js' },
+      { src: '/__/firebase/8.2.2/firebase-analytics.js' },
       { src: '/__/firebase/init.js' },
       {
         src: 'https://kit.fontawesome.com/9d28920b83.js',
-        crossorigin: 'anonymous'
-      }
-    ]
+        crossorigin: 'anonymous',
+      },
+    ],
   },
   /*
    ** Customize the progress-bar color
@@ -50,7 +54,10 @@ const config: NuxtConfig = {
   /*
    ** Global CSS
    */
-  css: ['~/assets/vendor/bootstrapious/style.default.css', '~/assets/vendor/bootstrapious/style.pink.css'],
+  css: [
+    '~/assets/vendor/bootstrapious/style.default.css',
+    '~/assets/vendor/bootstrapious/style.pink.css',
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -61,14 +68,14 @@ const config: NuxtConfig = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
   ],
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
   ],
   /*
    ** Axios module configuration
@@ -86,18 +93,18 @@ const config: NuxtConfig = {
     postcss: {
       preset: {
         autoprefixer: {
-          grid: 'autoplace'
-        }
-      }
-    }
+          grid: 'autoplace',
+        },
+      },
+    },
   },
   typescript: {
     typeCheck: {
       eslint: {
-        files: './**/*.{ts,js,vue}'
-      }
-    }
-  }
+        files: './**/*.{ts,js,vue}',
+      },
+    },
+  },
 }
 
 export default config
