@@ -38,12 +38,13 @@ const config: NuxtConfig = {
       },
     ],
     script: [
-      { src: '/__/firebase/8.2.2/firebase-app.js' },
-      { src: '/__/firebase/8.2.2/firebase-analytics.js' },
-      { src: '/__/firebase/init.js' },
+      { src: '/__/firebase/8.2.2/firebase-app.js', body: true },
+      { src: '/__/firebase/8.2.2/firebase-analytics.js', body: true },
+      { src: '/__/firebase/init.js', body: true },
       {
         src: 'https://kit.fontawesome.com/9d28920b83.js',
         crossorigin: 'anonymous',
+        body: true,
       },
     ],
   },
