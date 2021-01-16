@@ -78,6 +78,7 @@
               <div class="col-lg-6">
                 <div class="col-sm-6 mx-auto mt-5">
                   <img
+                    loading="lazy"
                     :src="portfolioData.about.imagePath"
                     alt="This is me"
                     class="image rounded-circle img-fluid"
@@ -251,6 +252,9 @@
                 >
                   <div class="works-thumbnail">
                     <img
+                      width="200"
+                      height="150"
+                      loading="lazy"
                       :src="workItem.thumbImagePath"
                       alt=""
                       class="img-fluid"
