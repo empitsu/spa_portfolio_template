@@ -4,32 +4,29 @@
       <div class="container">
         <button
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarcollapse"
           aria-controls="navbarSupportedContent"
-          aria-expanded="false"
+          :aria-expanded="isNavOpen.toString()"
           aria-label="Toggle navigation"
           class="navbar-toggler navbar-toggler-right"
+          @click="onClickNavOpenBtn"
         >
           <span class="fa fa-bars"></span>
         </button>
-        <div id="navbarcollapse" class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
-            <li
-              v-for="(navName, index) in navigationAry"
-              :key="index"
-              class="nav-item"
-            >
-              <a
-                :href="`#${navName}`"
-                class="nav-link link-scroll"
-                :class="{ active: navName === intersectingId }"
-                @click.prevent="onClickNavBtn"
-                >{{ convertToCamelCase(navName) }}</a
-              >
-            </li>
-          </ul>
-        </div>
+        <transition name="nav-bar">
+          <div v-show="isNavOpen" id="navbarcollapse" class="navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+              <li v-for="(navName, index) in navigationAry" :key="index">
+                <a
+                  :href="`#${navName}`"
+                  class="nav-link"
+                  :class="{ active: navName === intersectingId }"
+                  @click.prevent="onClickNavBtn"
+                  >{{ convertToCamelCase(navName) }}</a
+                >
+              </li>
+            </ul>
+          </div>
+        </transition>
       </div>
     </nav>
   </header>
@@ -60,6 +57,8 @@ interface HTMLElementEvent<T extends HTMLElement> extends Event {
 export default class extends Vue {
   @Prop() intersectingId!: IntersectingId
 
+  public isNavOpen = false
+
   public get navigationAry() {
     return [
       IntersectingId.INTRO,
@@ -73,6 +72,10 @@ export default class extends Vue {
       IntersectingId.EDUCATION,
       IntersectingId.CERTIFICATION,
     ]
+  }
+
+  public onClickNavOpenBtn(): void {
+    this.isNavOpen = !this.isNavOpen
   }
 
   public convertToCamelCase(text: string): string {
@@ -89,3 +92,12 @@ export default class extends Vue {
   }
 }
 </script>
+<style scoped>
+.nav-bar-enter-active,
+.nav-bar-leave-active {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+</style>
