@@ -12,6 +12,7 @@
 body {
   font-family: var(--fontFamily);
   font-size: 1rem;
+  line-height: 1.7;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;

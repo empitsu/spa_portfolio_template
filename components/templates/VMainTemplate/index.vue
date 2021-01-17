@@ -37,20 +37,20 @@
 
           <VTransitionOnIntersection :animation-type="FADE_IN_UP">
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-7">
                 <!-- eslint-disable vue/no-v-html -->
                 <p v-html="portfolioData.about.description"></p>
                 <!-- eslint-enable vue/no-v-html -->
               </div>
-              <div class="col-lg-6">
-                <div class="col-sm-6 mx-auto mt-5">
-                  <img
-                    loading="lazy"
-                    :src="portfolioData.about.imagePath"
-                    alt="This is me"
-                    class="image rounded-circle img-fluid"
-                  />
-                </div>
+              <div class="col-lg-5">
+                <img
+                  loading="lazy"
+                  :src="portfolioData.about.imagePath"
+                  width="300"
+                  height="300"
+                  alt=""
+                  class="image d-block mx-auto mt-5 rounded-circle"
+                />
               </div>
             </div>
           </VTransitionOnIntersection>
@@ -620,6 +620,12 @@ export default class extends Vue {
 }
 </script>
 <style scoped>
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 2.3rem;
+  }
+}
+
 .works-filter-enter-active {
   transition: all 1s;
 }
@@ -726,7 +732,7 @@ export default class extends Vue {
 }
 
 .vtimeline-content {
-  margin-left: 50px;
+  margin-left: 35px;
   background: #fff;
   padding: 15px;
   text-align: left;
