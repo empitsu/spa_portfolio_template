@@ -1,40 +1,9 @@
 <template>
   <div>
-    <header class="header">
-      <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-          <button
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarcollapse"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            class="navbar-toggler navbar-toggler-right"
-          >
-            <span class="fa fa-bars"></span>
-          </button>
-          <div id="navbarcollapse" class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-              <li
-                v-for="(navName, index) in navigationAry"
-                :key="index"
-                class="nav-item"
-              >
-                <a
-                  :href="`#${navName}`"
-                  class="nav-link link-scroll"
-                  :class="{ active: navName === intersectingId }"
-                  @click.prevent="onClickNavBtn"
-                  >{{ convertToCamelCase(navName) }}</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <!-- Intro Image-->
+    <VHeader
+      :intersecting-id="intersectingId"
+      @on-click-nav-btn="onClickNavBtn"
+    />
     <VIntersectionObserver
       :options="intersectionOptionsForNav"
       @intersect="onIntersect('intro')"
@@ -54,7 +23,6 @@
         </div>
       </section>
     </VIntersectionObserver>
-    <!-- About-->
     <VIntersectionObserver
       :options="intersectionOptionsForNav"
       @intersect="onIntersect('about')"
@@ -66,15 +34,14 @@
               <h2 class="title">About me</h2>
             </VTransitionOnIntersection>
           </header>
-          <div class="row">
-            <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+
+          <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+            <div class="row">
               <div class="col-lg-6">
                 <!-- eslint-disable vue/no-v-html -->
                 <p v-html="portfolioData.about.description"></p>
                 <!-- eslint-enable vue/no-v-html -->
               </div>
-            </VTransitionOnIntersection>
-            <VTransitionOnIntersection :animation-type="FADE_IN_UP">
               <div class="col-lg-6">
                 <div class="col-sm-6 mx-auto mt-5">
                   <img
@@ -85,12 +52,11 @@
                   />
                 </div>
               </div>
-            </VTransitionOnIntersection>
-          </div>
+            </div>
+          </VTransitionOnIntersection>
         </div>
       </section>
     </VIntersectionObserver>
-    <!-- Service-->
     <VIntersectionObserver
       :options="intersectionOptionsForNav"
       @intersect="onIntersect('highlights')"
@@ -113,7 +79,7 @@
               <VTransitionOnIntersection
                 :key="`item${index}`"
                 :animation-type="FADE_IN_UP"
-                class="col"
+                class="col-lg-6"
               >
                 <div class="icon">
                   <i :class="`fa fa-${highlightItem.icon}`"></i>
@@ -138,7 +104,6 @@
         </div>
       </section>
     </VIntersectionObserver>
-    <!-- Vision -->
     <VIntersectionObserver
       :options="intersectionOptionsForNav"
       @intersect="onIntersect('vision')"
@@ -196,10 +161,6 @@
         </div>
       </section>
     </VIntersectionObserver>
-    <!--
-    *** works IMAGE ***
-    _________________________________________________________
-    -->
     <VIntersectionObserver
       :options="intersectionOptionsForNav"
       @intersect="onIntersect('works')"
@@ -248,19 +209,19 @@
                 <div
                   v-for="workItem in activeWorks"
                   :key="workItem.id"
-                  class="works-item"
+                  class="row border-bottom mb-4"
                 >
-                  <div class="works-thumbnail">
+                  <div class="col-lg-3">
                     <img
-                      width="200"
-                      height="150"
+                      width="247"
+                      height="185"
                       loading="lazy"
                       :src="workItem.thumbImagePath"
                       alt=""
-                      class="img-fluid"
+                      class="mx-auto d-block mb-4"
                     />
                   </div>
-                  <div class="works-description">
+                  <div class="col-lg-9">
                     <h3 class="works-title">
                       {{ workItem.title }}
                     </h3>
@@ -324,7 +285,7 @@
             </VTransitionOnIntersection>
           </header>
           <VTransitionOnIntersection :animation-type="FADE_IN_UP">
-            <div class="articles-block">
+            <div class="articles-block border p-4 mx-auto mb-4">
               <dl class="articles-item">
                 <template
                   v-for="(articleItem, index) in portfolioData.articles"
@@ -338,7 +299,10 @@
                       >{{ articleItem.text }}</a
                     >
                   </dt>
-                  <dd :key="`description${index}`" class="articles-description">
+                  <dd
+                    :key="`description${index}`"
+                    class="articles-description border-bottom"
+                  >
                     {{ articleItem.description }}
                   </dd>
                 </template>
@@ -368,7 +332,7 @@
                 class="vtimeline-point"
               >
                 <div class="vtimeline-block">
-                  <div class="vtimeline-content">
+                  <div class="vtimeline-content border">
                     <h3>{{ historyItem.companyName }}</h3>
                     <p class="vtimeline-date">{{ historyItem.date }}</p>
                     <h4>{{ historyItem.position }}</h4>
@@ -399,7 +363,7 @@
             v-for="(educationItem, index) in portfolioData.education"
             :key="index"
             :animation-type="FADE_IN_UP"
-            class="education-block"
+            class="education-block border"
           >
             <h3>{{ educationItem.institutionName }}</h3>
             <span class="education-date">{{ educationItem.date }}</span>
@@ -424,12 +388,12 @@
             </VTransitionOnIntersection>
           </header>
           <VTransitionOnIntersection :animation-type="FADE_IN_UP">
-            <div class="articles-block">
+            <div class="certifications-block border p-4 mx-auto mb-4">
               <ul class="certifications-list">
                 <li
                   v-for="(licenseItem, index) in portfolioData.licenses"
                   :key="index"
-                  class="certifications-item"
+                  class="border-bottom py-3"
                 >
                   <p class="certification-name">
                     {{ licenseItem.title }}
@@ -451,7 +415,6 @@
                 v-for="(linkItem, index) in portfolioData.links"
                 :key="index"
                 :href="linkItem.url"
-                :class="`${linkItem.type}`"
                 target="_blank"
                 ><i
                   :class="`fa fa-${linkIconName(linkItem.type)}`"
@@ -463,14 +426,27 @@
           <!-- /.6-->
           <div class="col-md-6 text-center text-lg-right mt-4 mt-lg-0">
             <p>
-              © 2020 {{ portfolioData.firstName }} {{ portfolioData.lastName }}.
+              © 2021 {{ portfolioData.firstName }} {{ portfolioData.lastName }}.
               All rights reserved.
             </p>
           </div>
           <div class="col-12 mt-4">
             <p class="template-bootstrapious">
-              Designed by
-              <a href="https://www.bootstrapious.com">Bootstrapious</a>
+              The source code of this site is
+              <a
+                href="https://github.com/empitsu/spa_portfolio_template"
+                rel="noopener noreferrer"
+                target="_blank"
+                >here</a
+              >.
+              <br />
+              The design is based on
+              <a
+                href="https://www.bootstrapious.com"
+                rel="noopener noreferrer"
+                target="_blank"
+                >Bootstrapious</a
+              >.
               <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
             </p>
           </div>
@@ -487,6 +463,9 @@ import VTransitionOnIntersection, {
   AnimationType,
 } from '~/components/molecules/VTransitionOnIntersection/index.vue'
 import VAccordion from '~/components/atoms/VAccordion/index.vue'
+import VHeader, {
+  IntersectingId,
+} from '~/components/organisms/VHeader/index.vue'
 
 interface SkillCategory {
   categoryTitle: string
@@ -548,25 +527,17 @@ enum LinkType {
   GITHUB = 'github',
 }
 
-enum IntersectingId {
-  INTRO = 'intro',
-  ABOUT = 'about',
-  HIGHLIGHTS = 'highlights',
-  SKILLS = 'skills',
-  VISION = 'vision',
-  EXPERIENCE = 'experience',
-  WORKS = 'works',
-  ARTICLES = 'articles',
-  CERTIFICATION = 'certification',
-  EDUCATION = 'education',
-}
-
 interface HTMLElementEvent<T extends HTMLElement> extends Event {
   target: T | null
 }
 
 @Component({
-  components: { VIntersectionObserver, VTransitionOnIntersection, VAccordion },
+  components: {
+    VIntersectionObserver,
+    VTransitionOnIntersection,
+    VAccordion,
+    VHeader,
+  },
 })
 export default class extends Vue {
   @Prop() portfolioData!: PortfolioData
@@ -587,21 +558,6 @@ export default class extends Vue {
       (item) => item.categories
     )
     return [...new Set(categoriesAry.flat())]
-  }
-
-  public get navigationAry() {
-    return [
-      IntersectingId.INTRO,
-      IntersectingId.ABOUT,
-      IntersectingId.HIGHLIGHTS,
-      IntersectingId.VISION,
-      IntersectingId.SKILLS,
-      IntersectingId.WORKS,
-      IntersectingId.ARTICLES,
-      IntersectingId.EXPERIENCE,
-      IntersectingId.EDUCATION,
-      IntersectingId.CERTIFICATION,
-    ]
   }
 
   public get FADE_IN_DOWN(): AnimationType {
@@ -631,10 +587,6 @@ export default class extends Vue {
     }
   }
 
-  public convertToCamelCase(text: string): string {
-    return text.charAt(0).toUpperCase() + text.slice(1)
-  }
-
   public linkIconName(type: LinkType): string {
     switch (type) {
       case LinkType.EMAIL:
@@ -652,12 +604,10 @@ export default class extends Vue {
     }
   }
 
-  public onClickNavBtn(e: HTMLElementEvent<HTMLAnchorElement>): void {
-    if (e.target) {
-      const targetId = e.target.hash.replace(/^#/, '')
-      const target = this.$refs[targetId] as HTMLElement
-      target.scrollIntoView({ behavior: 'smooth' })
-    }
+  public onClickNavBtn(targetId: string | null): void {
+    if (targetId === null) return
+    const target = this.$refs[targetId] as HTMLElement
+    target.scrollIntoView({ behavior: 'smooth' })
   }
 
   public onClickWorksFilterBtn(categoryName: string): void {
@@ -778,9 +728,7 @@ export default class extends Vue {
 .vtimeline-content {
   margin-left: 50px;
   background: #fff;
-  border: 1px solid #e6e6e6;
   padding: 15px;
-  border-radius: 3px;
   text-align: left;
 }
 .vtimeline-content ul {
@@ -845,7 +793,6 @@ export default class extends Vue {
   max-width: 700px;
   margin: 0 auto 30px auto;
   padding: 15px;
-  border: 1px solid #dcd9d9;
   text-align: left;
 }
 
@@ -924,11 +871,6 @@ export default class extends Vue {
 
 .certifications-block {
   max-width: 700px;
-  border: 1px solid #dcd9d9;
-  border-radius: 3px;
-  margin: 0 auto 30px auto;
-  padding: 30px;
-  text-align: left;
 }
 
 .certifications-list {
@@ -936,10 +878,6 @@ export default class extends Vue {
   padding: 0;
 }
 
-.certifications-item {
-  padding: 16px 0 12px;
-  border-bottom: 1px solid #dcd9d9;
-}
 .certification-name {
   font-weight: 500;
   margin: 0;
@@ -951,11 +889,6 @@ export default class extends Vue {
 
 .articles-block {
   max-width: 700px;
-  border: 1px solid #dcd9d9;
-  border-radius: 3px;
-  margin: 0 auto 30px auto;
-  padding: 30px;
-  text-align: left;
 }
 
 .articles-title {
@@ -972,7 +905,6 @@ export default class extends Vue {
 .articles-description {
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #dcd9d9;
   color: #555;
 }
 
@@ -980,30 +912,6 @@ export default class extends Vue {
   border-bottom: none;
   margin-bottom: 0;
 }
-
-/* @media only screen and (max-width: 750px) {
-  #experience-timeline:before,
-  #experience-timeline:after {
-    left: 23px;
-  }
-
-  .vtimeline-date {
-    width: auto;
-    text-align: left;
-    position: relative;
-    margin-bottom: 15px;
-    display: block;
-    margin-left: 70px;
-  }
-
-  .vtimeline-icon {
-    margin-left: 0;
-  }
-
-  .vtimeline-content {
-    margin-left: 70px;
-  }
-} */
 
 @media only screen and (max-width: 768px) {
   .education-block h3,

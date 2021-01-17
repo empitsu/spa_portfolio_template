@@ -1,5 +1,5 @@
 <template>
-  <div :class="$options.name">
+  <div :class="`${$options.name} py-3`">
     <button
       v-if="!isOpen"
       :class="`${$options.name}__trigger-btn`"
@@ -50,10 +50,6 @@ export default class extends Vue {
 .slide-leave-to {
   transform: translateY(-10px);
   opacity: 0;
-}
-
-.v-accordion {
-  padding-top: 1rem;
 }
 
 .v-accordion__trigger-btn {
