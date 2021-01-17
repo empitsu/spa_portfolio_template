@@ -163,6 +163,46 @@
     </VIntersectionObserver>
     <VIntersectionObserver
       :options="intersectionOptionsForNav"
+      @intersect="onIntersect('articles')"
+    >
+      <section id="articles" ref="articles">
+        <div class="container">
+          <header class="text-center mb-2">
+            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
+              <h2 class="title">Articles</h2>
+            </VTransitionOnIntersection>
+          </header>
+          <VTransitionOnIntersection :animation-type="FADE_IN_UP">
+            <div class="articles-block border p-4 mx-auto mb-4">
+              <dl class="articles-item">
+                <template
+                  v-for="(articleItem, index) in portfolioData.articles"
+                >
+                  <dt :key="`title${index}`" class="articles-title">
+                    <a
+                      class="articles-link"
+                      :href="articleItem.link"
+                      target="_blank"
+                      rel="noopener"
+                      >{{ articleItem.text }}</a
+                    >
+                  </dt>
+                  <dd
+                    :key="`description${index}`"
+                    class="articles-description border-bottom"
+                  >
+                    {{ articleItem.description }}
+                  </dd>
+                </template>
+              </dl>
+            </div>
+          </VTransitionOnIntersection>
+        </div>
+      </section>
+    </VIntersectionObserver>
+
+    <VIntersectionObserver
+      :options="intersectionOptionsForNav"
       @intersect="onIntersect('works')"
     >
       <section id="works" ref="works">
@@ -228,34 +268,46 @@
                     <p>
                       <span class="project-date">{{ workItem.date }}</span>
                     </p>
-                    <dl
-                      v-if="workItem.responsibilities"
-                      class="works-responsibility"
-                    >
-                      <dt>Assigned process</dt>
+                    <dl v-if="workItem.categories" class="mb-0">
+                      <dt class="works-dt">Categories</dt>
+                      <dd
+                        v-for="(
+                          categoryName, categoryIndex
+                        ) in workItem.categories"
+                        :key="categoryIndex"
+                        class="works-labelled-item"
+                      >
+                        {{ categoryName }}
+                      </dd>
+                    </dl>
+                    <dl v-if="workItem.responsibilities" class="mb-0">
+                      <dt class="works-dt">Responsibilities</dt>
                       <dd
                         v-for="(
                           responsibilityName, responsibilityIndex
                         ) in workItem.responsibilities"
                         :key="responsibilityIndex"
+                        class="works-labelled-item"
                       >
                         {{ responsibilityName }}
                       </dd>
                     </dl>
-                    <dl v-if="workItem.roles" class="works-role">
-                      <dt>Responsibilities</dt>
+                    <dl v-if="workItem.roles" class="mb-0">
+                      <dt class="works-dt">Role</dt>
                       <dd
                         v-for="(roleName, roleIndex) in workItem.roles"
                         :key="roleIndex"
+                        class="works-labelled-item"
                       >
                         {{ roleName }}
                       </dd>
                     </dl>
-                    <dl v-if="workItem.techStacks" class="works-tech">
-                      <dt>Tech stack</dt>
+                    <dl v-if="workItem.techStacks" class="mb-0">
+                      <dt class="works-dt">Tech stack</dt>
                       <dd
                         v-for="(techName, techIndex) in workItem.techStacks"
                         :key="techIndex"
+                        class="works-labelled-item"
                       >
                         {{ techName }}
                       </dd>
@@ -270,45 +322,6 @@
               </transition-group>
             </VTransitionOnIntersection>
           </div>
-        </div>
-      </section>
-    </VIntersectionObserver>
-    <VIntersectionObserver
-      :options="intersectionOptionsForNav"
-      @intersect="onIntersect('articles')"
-    >
-      <section id="articles" ref="articles">
-        <div class="container">
-          <header class="text-center mb-2">
-            <VTransitionOnIntersection :animation-type="FADE_IN_DOWN">
-              <h2 class="title">Articles</h2>
-            </VTransitionOnIntersection>
-          </header>
-          <VTransitionOnIntersection :animation-type="FADE_IN_UP">
-            <div class="articles-block border p-4 mx-auto mb-4">
-              <dl class="articles-item">
-                <template
-                  v-for="(articleItem, index) in portfolioData.articles"
-                >
-                  <dt :key="`title${index}`" class="articles-title">
-                    <a
-                      class="articles-link"
-                      :href="articleItem.link"
-                      target="_blank"
-                      rel="noopener"
-                      >{{ articleItem.text }}</a
-                    >
-                  </dt>
-                  <dd
-                    :key="`description${index}`"
-                    class="articles-description border-bottom"
-                  >
-                    {{ articleItem.description }}
-                  </dd>
-                </template>
-              </dl>
-            </div>
-          </VTransitionOnIntersection>
         </div>
       </section>
     </VIntersectionObserver>
@@ -695,20 +708,11 @@ export default class extends Vue {
   color: #74808a;
 }
 
-.works-responsibility,
-.works-role,
-.works-tech {
-  margin: 0 auto;
-}
-.works-responsibility dt,
-.works-role dt,
-.works-tech dt {
+.works-dt {
   color: #555;
 }
 
-.works-responsibility dd,
-.works-role dd,
-.works-tech dd {
+.works-labelled-item {
   display: inline-block;
   margin: 6px;
   padding: 3px 7px;
