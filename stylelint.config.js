@@ -3,5 +3,5 @@ module.exports = {
   // https://stylelint.io/user-guide/configuration
   extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
   plugins: ['stylelint-scss'],
-  ignoreFiles: ["assets/vendor/**/*.css"]
+  ignoreFiles: ['assets/vendor/**/*.css'],
 }
