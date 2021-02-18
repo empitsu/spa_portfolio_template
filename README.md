@@ -27,3 +27,22 @@ $ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## How to Deploy
+
+
+* Create your firebase project.
+* Initialize your firebase project in the root directory.
+  * Create `.firebaserc` with your project name.
+  * cf. https://firebase.google.com/docs/cli#initialize_a_firebase_project
+* Configure user name and password for basic-auth.
+  * Create `.env` file in `<rootDir>/functions/` and input your user name and password as follows:
+    ```
+    BASIC_USER=username
+    BASIC_PASSWORD=yourpassword
+    ```
+* Start your api and build your application with `yarn generate`.
+* Deploy your app.
+  ```
+  yarn deploy
+  ```
