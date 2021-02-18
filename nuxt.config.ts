@@ -3,6 +3,9 @@ import { NuxtConfig } from '@nuxt/types'
 const config: NuxtConfig = {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
+  generate: {
+    dir: 'functions/dist',
+  },
   privateRuntimeConfig: {
     portfolioDataPath:
       process.env.PORTFOLIO_DATA_PATH || 'http://localhost:4010/portfolio-data',
@@ -43,8 +46,8 @@ const config: NuxtConfig = {
       },
     ],
     script: [
-      { src: '/__/firebase/8.2.2/firebase-app.js', body: true },
-      { src: '/__/firebase/8.2.2/firebase-analytics.js', body: true },
+      { src: '/__/firebase/8.2.3/firebase-app.js', body: true },
+      { src: '/__/firebase/8.2.3/firebase-analytics.js', body: true },
       { src: '/__/firebase/init.js', body: true },
       {
         src: 'https://kit.fontawesome.com/9d28920b83.js',
